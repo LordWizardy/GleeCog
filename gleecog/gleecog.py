@@ -9,6 +9,9 @@ folderPath = "/home/bastion/red_data/cogs/CogManager/cogs/gleecog/"
 
 class Gleecog(commands.Cog):
 
+    def __init__(self, bot):
+        self.bot = bot
+
     @commands.command(name="quote", aliases=["q"])
     async def quote(self, ctx):
         """Picks a random quote"""
