@@ -14,9 +14,9 @@ default_settings = {
     "AGREE_CHANNEL": None,
     "AGREE_MSG": "{mention} wants to join the {roles} party",
     "POSITIVE_REACT": "✅",
-    "POSITIVE_NEEDED": 1,
+    "POSITIVE_NEEDED": 3,
     "NEGATIVE_REACT": "❌",
-    "NEGATIVE_NEEDED": 0,
+    "NEGATIVE_NEEDED": 1,
     "VOTE_SUCCEEDED": "Voting successful, user {mention} was awarded role {roles} by users {people}",
     "VOTE_CANCELLED": "Voting of {mention} cancelled by users {people}"
 }
@@ -381,8 +381,7 @@ class VoteMember(commands.Cog):
             await ctx.send("No roles have been set for votemember.")
             return
         if not await self.config.guild(guild).ENABLED():
-            await ctx.send("Votemember has been disabled, enable it first.")
-            return
+            await ctx.send("Votemember is disabled, don't forget to enable it afterwards :)")
         if channel is None:
             await self.config.guild(guild).AGREE_CHANNEL.set(None)
             await ctx.send("Agreement channel cleared")
@@ -404,8 +403,7 @@ class VoteMember(commands.Cog):
             await ctx.send("No roles have been set for votemember.")
             return
         if not await self.config.guild(guild).ENABLED():
-            await ctx.send("Votemember has been disabled, enable it first.")
-            return
+            await ctx.send("Votemember is disabled, don't forget to enable it afterwards :)")
         if message is None:
             await self.config.guild(guild).AGREE_MSG.set(None)
             await ctx.send("Agreement message cleared")
@@ -440,15 +438,14 @@ class VoteMember(commands.Cog):
             await ctx.send("No roles have been set for votemember.")
             return
         if not await self.config.guild(guild).ENABLED():
-            await ctx.send("Votemember has been disabled, enable it first.")
-            return
+            await ctx.send("Votemember is disabled, don't forget to enable it afterwards :)")
         if channel is None:
             await self.config.guild(guild).ENABLED.set(False)
             await self.config.guild(guild).AGREE_CHANNEL.set(None)
-            await self.config.guild(guild).AGREE_MSG.set(None)
-            await self.config.guild(guild).POSITIVE_REACT.set(None)
+            await self.config.guild(guild).AGREE_MSG.set("{mention} wants to join the {roles} party")
+            await self.config.guild(guild).POSITIVE_REACT.set("✅")
             await self.config.guild(guild).POSITIVE_NEEDED.set(3)
-            await self.config.guild(guild).NEGATIVE_REACT.set(None)
+            await self.config.guild(guild).NEGATIVE_REACT.set("❌")
             await self.config.guild(guild).NEGATIVE_NEEDED.set(1)
             await ctx.send("Settings cleared and votemember disabled")
         else:
